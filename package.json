@@ -1,0 +1,23 @@
+{
+	"name": "solidprinciples.ts",
+	"version": "1.0.0",
+	"description": "",
+	"main": "src/app.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"srp:naive": "NODE_OPTIONS=\"-r ts-node/register\" && ts-node ./src/run_srp_naive.ts",
+		"node": "node --trace-deprecation --abort-on-uncaught-exception -r ts-node/register ./src/run_srp_naive.ts"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"chalk": "^4.1.2"
+	},
+	"devDependencies": {
+		"@types/chalk": "^2.2.0",
+		"@types/node": "^16.11.4",
+		"ts-node": "^10.4.0",
+		"tslib": "^2.3.1",
+		"typescript": "^4.4.4"
+	}
+}
