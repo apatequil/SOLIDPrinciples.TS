@@ -13,16 +13,16 @@ export class ProductValidator {
 	isValidPrice = (product: Product, count: number): ProductValidationResult => {
 
 		if(product.price <= 0) {
-			return new ProductValidationResult(false, `Invalid product identified. Price must be > $0 ${JSON.stringify(product)}`)
+			return this.buildResult(false, `Invalid product identified. Price must be > $0 ${JSON.stringify(product)}`)
 		}
 
-		return new ProductValidationResult(true, "Valid")
+		return this.buildResult(true, "Valid")
 	}
 
 	isValidQuantity = (product: Product, count: number): ProductValidationResult => {
 
 		if(count < 0) {
-			return new ProductValidationResult(false, `Cannot have a negative product inventory. Context: ${JSON.stringify(product)}`)
+			return this.buildResult(false, `Cannot have a negative product inventory. Context: ${JSON.stringify(product)}`)
 		}
 
 		return new ProductValidationResult(true, "Valid")
@@ -36,5 +36,9 @@ export class ProductValidator {
 			isValid: results.every(x => x.isSuccessful),
 			results: results
 		}
+	}
+
+	buildResult(isValid: boolean, message: string): ProductValidationResult {
+		return new ProductValidationResult(isValid, message)
 	}
 }

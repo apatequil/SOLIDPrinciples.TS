@@ -24,21 +24,21 @@ function runSingleResponsibilityNaive() {
 	info(`|| Single Responsibility Naive ||`)
 	info(`=================================`)
 
-	const manager = new ProductManager(console)
+	const manager = new ProductManager()
 
-	info(`Begining Inventory:`)
-	info(manager.getProductList(), 1)
+	info(`Beginning Inventory:`)
+	manager.listProducts()
 	info(`Add some products:`)
 
-	log(manager.addProduct({name: 'Bicycle', description: 'Typical bicycle', price: 250}, 10))
-	log(manager.addProduct({name: 'Unicycle', description: 'Typical unicycle', price: 500}, 10))
-	log(manager.addProduct({name: 'Tricycle', description: 'Typical tricycle', price: 750}, 10))
-	log(manager.addProduct({name: 'Quadcycle', description: 'Typical 4-wheeler', price: 1000}, 10))
+	manager.addProduct({name: 'Bicycle', description: 'Typical bicycle', price: 250}, 3)
+	manager.addProduct({name: 'Unicycle', description: 'Typical unicycle', price: 500}, 2)
+	manager.addProduct({name: 'Tricycle', description: 'Typical tricycle', price: 750}, 9)
+	manager.addProduct({name: 'Quadcycle', description: 'Typical 4-wheeler', price: 1000}, 1)
 
-	info(manager.getProductList(), 1)
+	manager.listProducts()
 
 	info('Now add a duplicated item and should see an error')
-	log(manager.addProduct({name: 'Bicycle', description: 'Typical bicycle', price: 250}, 10))
+	manager.addProduct({name: 'Bicycle', description: 'Typical bicycle', price: 250}, 10)
 
 	info('Done')
 }

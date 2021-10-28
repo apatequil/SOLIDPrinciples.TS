@@ -1,6 +1,8 @@
 import { ProductOperationResult } from './product_inventory_result';
 import { Product } from './product'
 import { ProductInventory } from './product_inventory'
+import chalk from 'chalk'
+import { ConsoleLogger } from '../../util/logger/consoleLogger';
 
 // Naive implementation of an inventory management system. The manager maintains the inventory state
 // of products.
@@ -11,62 +13,61 @@ import { ProductInventory } from './product_inventory'
 // - Log information when a product is successfully updated
 export class ProductManager {
 	private readonly productCatalog: ProductInventory[]	= [];
+	private readonly logger: ConsoleLogger = new ConsoleLogger()
 
-	constructor(private readonly logger: Console) {}
-
-	public addProduct(product: Product, count: number): ProductOperationResult {
-
+	public addProduct(product: Product, count: number) {
 		// The price of the product must be greater than 0
-		if(product.price <= 0) {
-			return new ProductOperationResult(false, `Invalid product identified. Price must be > $0 ${JSON.stringify(product)}`)
+		if(product.price <= 0) {			
+			this.logger.logError(`Invalid product identified. Price must be > $0 ${JSON.stringify(product)}`)
+			return;
 		}
 
 		// Can't have negative inventory
 		if(count < 0) {
-			return new ProductOperationResult(false, `Cannot have a negative product inventory. Context: ${JSON.stringify(product)}`)
+			this.logger.logError(`Cannot have a negative product inventory. Context: ${JSON.stringify(product)}`)
+			return;
 		}
 
 		const existingProduct: ProductInventory | undefined = this.productCatalog.filter(x => x.name === product.name)?.pop()
 
+		// No duplicate products
 		if(existingProduct) {
-			return new ProductOperationResult(false, `Cannot add duplicate item with name ${product.name}`)
+			this.logger.logError(`Cannot add duplicate product with name ${product.name}`)
+			return;
 		}
 
 
 		// Validation passed. Add new product to catalog
 		this.productCatalog.push({ name: product.name, inventoryCount: count, product: product })
-		return new ProductOperationResult(true, `Product ${product.name} has been added with inventory ${count}`)
+		this.logger.logInfo(`Product ${product.name} has been added with inventory ${count}`)
 	}
 
-	public updateProduct(name: string, product: Product, count: number): ProductOperationResult {
+	public updateProduct(name: string, product: Product, count: number) {
 
 		// Make sure we don't lose money on each product
 		if(product.price <= 0){
-			return new ProductOperationResult(false, `Invalid product identified. Price must be > $0 ${JSON.stringify(product)}`)
-		}
-
-		if(count < 0){
-			return new ProductOperationResult(false, `Cannot add a negative amount of a product. Context: ${JSON.stringify(product)}`)
+			this.logger.logError(`Invalid product price. Price must be > $0 ${JSON.stringify(product)}`)
+			return;
 		}
 
 		const existingProduct: ProductInventory | undefined = this.productCatalog.filter(x => x.name === product.name)?.pop()
 
 		if(!existingProduct) {
-			return new ProductOperationResult(false, `Product not found. Add product by calling addProduct before trying to update. Context: ${JSON.stringify(product)}`)
+			this.logger.logError(`Product not found. Add product by calling addProduct before trying to update. Context: ${JSON.stringify(product)}`)
+			return
 		}
 
 		existingProduct.product = product
 		existingProduct.inventoryCount = count
 
 
-		return new ProductOperationResult(true, `Product ${name} has been updated: Context: ${product}`)
+		this.logger.logInfo(`Product ${name} has been updated: Context: ${product}`)
 	}
 
-	public getProductList(): string {
+	public listProducts(): void {
 		if(this.productCatalog.length < 1) {
-			return "There are currently no products in inventory"
+			this.logger.logInfo("There are currently no products in inventory")
+			return;
 		}
-
-		return `Products: ${this.productCatalog.map(x => `${x.name} [${x.inventoryCount}]`).join(", ")}`;
 	}
 }

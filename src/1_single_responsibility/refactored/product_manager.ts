@@ -1,9 +1,9 @@
-import { ProductOperationResult } from './product_inventory_result';
+import { ProductValidationResult } from './product_validation_result';
 import { Product } from './product'
 import { ProductInventory } from './product_inventory'
 import { ProductValidator } from './product_validator';
 
-// Naive implementation of an inventory management system. The manager maintains the inventory state
+// Refactored implementation of an inventory management system. The manager maintains the inventory state
 // of products.
 // Restrictions:
 // - Cannot have duplicate products defined in the system. Duplicates defined as having the same product name. Log error when this happens
@@ -13,59 +13,72 @@ import { ProductValidator } from './product_validator';
 export class ProductManager {
 	private readonly productCatalog: ProductInventory[]	= [];
 
-	constructor(private readonly logger: Console, private readonly validator: ProductValidator) {}
+	constructor(private readonly validator: ProductValidator) {
+		
+		
+	}
 
-	public addProduct(product: Product, count: number): ProductOperationResult[] {
+	private isDuplicateProduct(product: Product): ProductValidationResult {
+		
+		const existingProduct: ProductInventory | undefined = this.productCatalog.filter(x => x.name === product.name)?.pop()
+
+		if(existingProduct) {
+			return this.validator.buildResult(false, `Cannot add duplicate item. Context: ${JSON.stringify(product)}`)
+		}
+
+		return this.validator.buildResult(true, `Valid`)
+	}
+
+	private doesProductExist(product: Product): ProductValidationResult {
+		
+		const existingProduct: ProductInventory | undefined = this.productCatalog.filter(x => x.name === product.name)?.pop()
+
+		if(existingProduct) {
+			return this.validator.buildResult(false, `Cannot add duplicate item. Context: ${JSON.stringify(product)}`)
+		}
+
+		return this.validator.buildResult(true, `Valid`)
+	}
+
+	public addProduct(product: Product, count: number): ProductValidationResult[] {
+
+		// We can add any manager-specific validations to our validator and they will automatically run
+		this.validator.addValidation(this.isDuplicateProduct)
 
 		const productValidationResult = this.validator.runAll(product, count)
 
 		if(!productValidationResult.isValid) {
+			return productValidationResult.results
 		}
-		// The price of the product must be greater than 0
-		if(product.price <= 0) {
-			return new ProductOperationResult(false, `Invalid product identified. Price must be > $0 ${JSON.stringify(product)}`)
-		}
-
-		// Can't have negative inventory
-		if(count < 0) {
-			return new ProductOperationResult(false, `Cannot have a negative product inventory. Context: ${JSON.stringify(product)}`)
-		}
-
-		const existingProduct: ProductInventory | undefined = this.productCatalog.filter(x => x.name === product.name)?.pop()
-
-		if(existingProduct) {
-			return new ProductOperationResult(false, `Cannot add duplicate item with name ${product.name}`)
-		}
-
 
 		// Validation passed. Add new product to catalog
 		this.productCatalog.push({ name: product.name, inventoryCount: count, product: product })
-		return new ProductOperationResult(true, `Product ${product.name} has been added with inventory ${count}`)
+
+		return [
+			this.validator.buildResult(true, `Product ${product.name} has been added with inventory ${count}`)
+		]
 	}
 
-	public updateProduct(name: string, product: Product, count: number): ProductOperationResult[] {
+	// public updateProduct(name: string, product: Product, count: number): ProductValidationResult[] {
 
-		// Make sure we don't lose money on each product
-		if(product.price <= 0){
-			return new ProductOperationResult(false, `Invalid product identified. Price must be > $0 ${JSON.stringify(product)}`)
-		}
-
-		if(count < 0){
-			return new ProductOperationResult(false, `Cannot add a negative amount of a product. Context: ${JSON.stringify(product)}`)
-		}
-
-		const existingProduct: ProductInventory | undefined = this.productCatalog.filter(x => x.name === product.name)?.pop()
-
-		if(!existingProduct) {
-			return new ProductOperationResult(false, `Product not found. Add product by calling addProduct before trying to update. Context: ${JSON.stringify(product)}`)
-		}
-
-		existingProduct.product = product
-		existingProduct.inventoryCount = count
+	// 	// We can add any manager-specific validations to our validator and they will automatically run
+	// 	this.validator.addValidation(this.doesProductExist)
 
 
-		return new ProductOperationResult(true, `Product ${name} has been updated: Context: ${product}`)
-	}
+	// 	const productValidationResult = this.validator.runAll(product, count)
+
+	// 	if(!productValidationResult.isValid) {
+	// 		return productValidationResult.results
+	// 	}
+
+		
+
+	// 	existingProduct.product = product
+	// 	existingProduct.inventoryCount = count
+
+
+	// 	return new ProductValidationResult(true, `Product ${name} has been updated: Context: ${product}`)
+	// }
 
 	public getProductList(): string {
 		if(this.productCatalog.length < 1) {

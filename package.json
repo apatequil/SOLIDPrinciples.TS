@@ -5,8 +5,8 @@
 	"main": "src/app.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"srp:naive": "NODE_OPTIONS=\"-r ts-node/register\" && ts-node ./src/run_srp_naive.ts",
-		"node": "node --trace-deprecation --abort-on-uncaught-exception -r ts-node/register ./src/run_srp_naive.ts"
+		"srp:naive": "NODE_OPTIONS=\"-r ts-node/register\" && ts-node ./src/1.run_srp_naive.ts",
+		"srp:refactored": "NODE_OPTIONS=\"-r ts-node/register\" && ts-node ./src/2.run_srp_refactored.ts"
 	},
 	"author": "",
 	"license": "ISC",
