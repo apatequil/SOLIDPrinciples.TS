@@ -37,6 +37,8 @@ To view all available commands, please look at the [scripts](./package.json) sec
 ### Debugging the principles
 There are debugger launch configurations defined for each version (naive and refactored) of each principle. To debug simply select the principle and version you want to step through, add any breakpoints, and run the debugger.
 
+![Select launch profile (VSCode)](./src/documentation/images/launchProfileSelection.png)
+
 To launch a specific debugger:
 1. open the Run and Debug panel
 2. Select the principle and version launch configuration at the top
