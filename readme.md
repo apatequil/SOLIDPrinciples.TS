@@ -26,11 +26,11 @@ Each principle has been broken down into their own folders. Within each of those
 ### Documentation
 Similar to the source code, the documenation has been broken up into a file for each principle. Each file describes the principle in question as well as why and how the naive version breaks the principle. There is limited discussion over why the changes between naive and refactored were made as well but comparing the different code implementations is the best way to view the changes.
 
-[Single Responsibility](src/documentation/1_single_responsibility.md)
-[Open/Close](src/documentation/2_open_closed.md)
-[Liskov's Substitution](src/documentation/3_liskovs_substitution.md)
-[Interface Segregation](src/documentation/4_interface_segregation.md)
-[Dependency Inversion](src/documentation/5_dependency_inversion.md)
+- [Single Responsibility](src/documentation/1_single_responsibility.md)
+- [Open/Close](src/documentation/2_open_closed.md)
+- [Liskov's Substitution](src/documentation/3_liskovs_substitution.md)
+- [Interface Segregation](src/documentation/4_interface_segregation.md)
+- [Dependency Inversion](src/documentation/5_dependency_inversion.md)
 
 ## Executing Examples
 ### Running the principles
