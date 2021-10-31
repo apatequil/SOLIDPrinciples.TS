@@ -45,31 +45,8 @@ export class ProductManager {
 		this.logger.logInfo(`Product ${product.name} has been added with inventory ${count}`)
 	}
 
-	// Responsibility: Validation
-	public updateProduct(name: string, product: Product, count: number) {
-
-		// Make sure we don't lose money on each product
-		if(product.price <= 0){
-			this.logger.logError(`Invalid product price. Price must be > $0 ${JSON.stringify(product)}`)
-			return;
-		}
-
-		const existingProduct: ProductInventory | undefined = this.productCatalog.filter(x => x.name === product.name)?.pop()
-
-		if(!existingProduct) {
-			this.logger.logError(`Product not found. Add product by calling addProduct before trying to update. Context: ${JSON.stringify(product)}`)
-			return
-		}
-
-		existingProduct.product = product
-		existingProduct.inventoryCount = count
-
-
-		this.logger.logInfo(`Product ${name} has been updated: Context: ${product}`)
-	}
-
 	// Part of main responsibility (maintaining collection of items)
-	public listProducts(): void {
+	public getProducts(): void {
 		if(this.productCatalog.length < 1) {
 			this.logger.logInfo("There are currently no products in inventory")
 			return;

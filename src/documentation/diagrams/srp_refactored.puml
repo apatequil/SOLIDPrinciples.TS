@@ -1,0 +1,22 @@
+@startuml
+
+package "Actors" {
+	actor "Product Manager" as pm
+	actor Validator as v
+}
+
+package "Responsibilities" as r1 {
+	usecase "Maintain Products" as uc1
+	usecase "Validation of Products" as uc2
+	usecase "Reporting" as uc3
+}
+
+pm --> uc1
+v --> uc2
+
+note "Reporting has been entirely removed.\nThe manager just returns the inventory objects \nrather than outputing/reporting" as N1
+note "Manager uses validator rather than doing validation itself" as N2
+pm .. N2
+N2 .. v
+uc3 .. N1
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+
+actor "Product Manager" as pm
+
+package "Responsibilities" as r1 {
+	usecase "Maintain Products" as uc1
+	usecase "Validation of Products" as uc2
+	usecase "Reporting of Products" as uc3
+}
+
+pm --> uc1
+pm --> uc2
+pm --> uc3
+@enduml
