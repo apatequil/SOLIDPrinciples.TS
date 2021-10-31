@@ -40,7 +40,7 @@ Additionally, the manager cares which validation errors take place with this imp
 
 ![Refactored Implementation](images/srp_refactored.png)
 
-##### Removing Validation Responsibility
+#####  Removing Validation Responsibility
 By offloading the responsibility of validation to a separate object, the manager removes that responsibility entirely. While the manager still depends on the validator, the validator maintains the rules and execution logic. In other words, business rule changes around validation can happen without having to update the manager.
 
 ##### Removing Reporting Responsibility
