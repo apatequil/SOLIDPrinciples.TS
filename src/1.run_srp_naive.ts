@@ -19,7 +19,7 @@ function runSingleResponsibilityNaive() {
 	const manager = new ProductManager()
 
 	info(`Beginning Inventory:`)
-	manager.listProducts()
+	manager.getProducts()
 	info(`Add some products:`)
 
 	manager.addProduct({name: 'Bicycle', description: 'Typical bicycle', price: 250}, 3)
@@ -27,7 +27,7 @@ function runSingleResponsibilityNaive() {
 	manager.addProduct({name: 'Tricycle', description: 'Typical tricycle', price: 750}, 9)
 	manager.addProduct({name: 'Quadcycle', description: 'Typical 4-wheeler', price: 1000}, 1)
 
-	manager.listProducts()
+	manager.getProducts()
 
 	info('Now add a duplicated item and should see an error')
 	manager.addProduct({name: 'Bicycle', description: 'Typical bicycle', price: 250}, 10)
