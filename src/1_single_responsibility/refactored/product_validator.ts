@@ -1,7 +1,4 @@
-import { ProductValidationResult } from './product_validation_result';
-import { Product } from './product';
-import { ProductValidationContext } from './product_validation_context';
-
+import { ProductValidationResult, Product, ProductValidationContext } from './'
 
 export class ProductValidator {
 	private validations: { (product: Product, context: ProductValidationContext): ProductValidationResult; }[] = [];
