@@ -6,5 +6,6 @@ export { ProductValidationContext } from './product_validation_context'
 export { ProductValidationResult } from './product_validation_result'
 export { ProductValidator } from './product_validator'
 export { ProductManager } from './product_manager'
+export { LogLevel, LoggerType, Logger } from './logger'
 
 export const Validations = { isValidPrice, isDuplicateProduct, isValidQuantity }

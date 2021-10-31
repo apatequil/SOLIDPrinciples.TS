@@ -1,7 +1,7 @@
-import { Product, ProductInventory, ProductValidator, ProductValidationContext } from './'
-import { ConsoleLogger } from '../../util/logger/consoleLogger'
+import { Product, ProductInventory, ProductValidator, ProductValidationContext, Logger, LogLevel } from './'
 
-// Refactored implementation of an inventory management system. The manager maintains the inventory state
+// Naive version of the Product Manager after more "robust" logging has been added. The logging functionality is
+// now done through the logger as before but the logger itself can log to console, database, etc..
 // of products.
 // Restrictions:
 // - Validation must pass before adding a product
@@ -14,7 +14,7 @@ export class ProductManager {
 	// helps set things up for future principles like 'O' and 'D'
 	constructor (
 		private readonly validator: ProductValidator,
-		private readonly logger: ConsoleLogger,
+		private readonly logger: Logger,
 		private readonly productCatalog: ProductInventory[] = Array.of<ProductInventory>()) { }
 
 	addProduct(product: Product, count: number): void {
@@ -31,9 +31,12 @@ export class ProductManager {
 			return
 		}
 
+		// Note that we're outputting the log information here for simplicity's sake. Ideally this would
+		// simply return the errors and the caller would decide if they are errors or not. This is to
+		// keep the examples as simple as possible
 		validationResults.results.forEach(x => {
 			if(!x.isSuccessful){
-				this.logger.logError(x.message)
+				this.logger.log(x.message, LogLevel.Error)
 			}
 		})
 	}
