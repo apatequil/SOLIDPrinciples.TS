@@ -1,3 +1,4 @@
+export { ConsoleLogger } from './console_logger'
 export { Product } from './product'
 export { ProductInventory } from './product_inventory'
 export { ProductOperationResult } from './product_inventory_result'

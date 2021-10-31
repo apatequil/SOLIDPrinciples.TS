@@ -1,5 +1,5 @@
-import { Product, ProductInventory, ProductValidator, ProductValidationContext } from './'
-import { ConsoleLogger } from '../../util/logger/consoleLogger'
+import { Product, ProductInventory, ProductValidator, ProductValidationContext, ConsoleLogger } from './'
+
 
 // Refactored implementation of an inventory management system. The manager maintains the inventory state
 // of products.

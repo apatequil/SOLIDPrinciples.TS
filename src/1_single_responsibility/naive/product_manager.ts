@@ -1,6 +1,4 @@
-import { Product } from './product'
-import { ProductInventory } from './product_inventory'
-import { ConsoleLogger } from '../../util/logger/consoleLogger';
+import { Product, ProductInventory, ConsoleLogger } from './'
 
 // Naive implementation of an inventory management system. The manager maintains the inventory state
 // of products.

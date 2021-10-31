@@ -1,5 +1,6 @@
 import { isValidPrice, isDuplicateProduct, isValidQuantity } from './validations'
 
+export { ConsoleLogger } from './console_logger'
 export { Product } from './product'
 export { ProductInventory } from './product_inventory'
 export { ProductValidationContext } from './product_validation_context'
