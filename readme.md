@@ -1,6 +1,12 @@
 # Overview
 This repository contains information about the 5 design principles covered by SOLID. This includes code examples with before (naive) and after (refactored) implementations when applying the principles.
 
+In order to demonstrate violations of the principles as well as how to correct them, we are utilizing ts-node to execute Typescript directly (from our perspective) as registered node modules. This means we can write and execute TS without having to execute TSC or pollute our file structure with js files.
+
+When executing NPM commands, you are registering explicit scripts with node and executing. Debugging also works and you can directly inspect stack and debug information through ts-node hookinginto the inspect mode. What this ultimately means is we don't need to deal with JS files for development or debugging these examples.
+
+Given the above, it is expected you have a current version of Nodejs and ts-node.
+
 ### In Progress/Improvements:
 - Add Open Close principle implementation
 - Add Liskov's Substitution principle implementation
