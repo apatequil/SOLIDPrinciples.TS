@@ -24,6 +24,102 @@
 			"args": [
 				"${workspaceRoot}/src/2.run_srp_refactored"
 			]
+		},
+		{
+			"name": "Launch OCP:Naive",
+			"type": "node",
+			"request": "launch",
+			"runtimeArgs": [
+				"-r",
+				"ts-node/register",
+			],
+			"args": [
+				"${workspaceRoot}/src/3.run_ocp_naive"
+			]
+		},
+		{
+			"name": "Launch OCP:Refactored",
+			"type": "node",
+			"request": "launch",
+			"runtimeArgs": [
+				"-r",
+				"ts-node/register",
+			],
+			"args": [
+				"${workspaceRoot}/src/4.run_ocp_refactored"
+			]
+		},
+		{
+			"name": "Launch LSP:Naive",
+			"type": "node",
+			"request": "launch",
+			"runtimeArgs": [
+				"-r",
+				"ts-node/register",
+			],
+			"args": [
+				"${workspaceRoot}/src/5.run_lsp_naive"
+			]
+		},
+		{
+			"name": "Launch LSP:Refactored",
+			"type": "node",
+			"request": "launch",
+			"runtimeArgs": [
+				"-r",
+				"ts-node/register",
+			],
+			"args": [
+				"${workspaceRoot}/src/6.run_lsp_refactored"
+			]
+		},
+		{
+			"name": "Launch ISP:Naive",
+			"type": "node",
+			"request": "launch",
+			"runtimeArgs": [
+				"-r",
+				"ts-node/register",
+			],
+			"args": [
+				"${workspaceRoot}/src/7.run_isp_naive"
+			]
+		},
+		{
+			"name": "Launch ISP:Refactored",
+			"type": "node",
+			"request": "launch",
+			"runtimeArgs": [
+				"-r",
+				"ts-node/register",
+			],
+			"args": [
+				"${workspaceRoot}/src/8.run_isp_refactored"
+			]
+		},
+		{
+			"name": "Launch DIP:Naive",
+			"type": "node",
+			"request": "launch",
+			"runtimeArgs": [
+				"-r",
+				"ts-node/register",
+			],
+			"args": [
+				"${workspaceRoot}/src/9.run_dip_naive"
+			]
+		},
+		{
+			"name": "Launch DIP:Refactored",
+			"type": "node",
+			"request": "launch",
+			"runtimeArgs": [
+				"-r",
+				"ts-node/register",
+			],
+			"args": [
+				"${workspaceRoot}/src/10.run_dip_refactored"
+			]
 		}
 	]
 }

@@ -2,10 +2,10 @@
 // Open/Close Principle example
 import { ProductManager, ProductValidator, ProductInventory, Validations, Logger, LoggerType } from './2_open_closed/naive'
 
-function runSingleResponsibilityRefactored() {
+function runOpenClosedNaive() {
 
 	//`======================================`
-	//`|| Open/Closed Refactored           ||`
+	//`|| Open/Closed Naive           ||`
 	//`======================================`
 
 	// Construct logger. Note the type of logger is now passed and multiple types are supported
@@ -36,4 +36,4 @@ function runSingleResponsibilityRefactored() {
 	console.log("Completed SRP:Refactored")
 }
 
-runSingleResponsibilityRefactored();
+runOpenClosedNaive();
