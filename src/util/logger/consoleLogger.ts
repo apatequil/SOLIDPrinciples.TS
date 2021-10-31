@@ -1,7 +1,8 @@
-import { ILogger } from "./logger";
 import chalk from 'chalk'
 
 export class ConsoleLogger {
+
+	constructor() {}
     logError(message: string): void {
         console.log(chalk.red`${message}`)
     }

@@ -1,7 +1,5 @@
-import { ProductOperationResult } from './product_inventory_result';
 import { Product } from './product'
 import { ProductInventory } from './product_inventory'
-import chalk from 'chalk'
 import { ConsoleLogger } from '../../util/logger/consoleLogger';
 
 // Naive implementation of an inventory management system. The manager maintains the inventory state
@@ -12,12 +10,17 @@ import { ConsoleLogger } from '../../util/logger/consoleLogger';
 // - Cannot update a product which the manager doesn't know about. Log error when this happens
 // - Log information when a product is successfully updated
 export class ProductManager {
+
+	// Responsibility: Maintain collection of items
 	private readonly productCatalog: ProductInventory[]	= [];
+
+	// Responsibility: If we ever want to change to a db logger or some other type we'd have to change this class
 	private readonly logger: ConsoleLogger = new ConsoleLogger()
 
+	// Responsibility: Validation performed in here
 	public addProduct(product: Product, count: number) {
 		// The price of the product must be greater than 0
-		if(product.price <= 0) {			
+		if(product.price <= 0) {
 			this.logger.logError(`Invalid product identified. Price must be > $0 ${JSON.stringify(product)}`)
 			return;
 		}
@@ -42,6 +45,7 @@ export class ProductManager {
 		this.logger.logInfo(`Product ${product.name} has been added with inventory ${count}`)
 	}
 
+	// Responsibility: Validation
 	public updateProduct(name: string, product: Product, count: number) {
 
 		// Make sure we don't lose money on each product
@@ -64,6 +68,7 @@ export class ProductManager {
 		this.logger.logInfo(`Product ${name} has been updated: Context: ${product}`)
 	}
 
+	// Part of main responsibility (maintaining collection of items)
 	public listProducts(): void {
 		if(this.productCatalog.length < 1) {
 			this.logger.logInfo("There are currently no products in inventory")

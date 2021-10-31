@@ -1,6 +1,6 @@
 
 // Single Responsibility Principle Examples
-import { ProductManager, ProductOperationResult } from './1_single_responsibility/naive'
+import { ProductManager } from './1_single_responsibility/naive'
 import chalk from 'chalk'
 
 function buildIndent(count: number) {
@@ -8,14 +8,6 @@ function buildIndent(count: number) {
 }
 function info(message: string, indent: number = 0) {
 	console.log(chalk.cyan(`${buildIndent(indent)}${message}`))
-}
-function log(operationResult: ProductOperationResult, indent: number = 1) {
-	if(operationResult.isSuccessful){
-		console.log(chalk.green(`${buildIndent(indent)}${operationResult.message}`))
-		return;
-	}
-
-	console.log(chalk.red(`${buildIndent(indent)}${operationResult.message}`))
 }
 
 function runSingleResponsibilityNaive() {

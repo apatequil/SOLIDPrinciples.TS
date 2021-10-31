@@ -2,23 +2,27 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "SRP Naive",
+			"name": "Launch SRP:Naive",
 			"type": "node",
 			"request": "launch",
-			"runtimeExecutable": "node",
 			"runtimeArgs": [
-				"--nolazy",
 				"-r",
-				"ts-node/register/transpile-only"
+				"ts-node/register",
 			],
 			"args": [
-				"src/run_srp_naive.ts",
+				"${workspaceRoot}/src/1.run_srp_naive"
+			]
+		},
+		{
+			"name": "Launch SRP:Refactored",
+			"type": "node",
+			"request": "launch",
+			"runtimeArgs": [
+				"-r",
+				"ts-node/register",
 			],
-			"cwd": "${workspaceRoot}",
-			"internalConsoleOptions": "openOnSessionStart",
-			"skipFiles": [
-				"<node_internals>/**",
-				"node_modules/**"
+			"args": [
+				"${workspaceRoot}/src/2.run_srp_refactored"
 			]
 		}
 	]
