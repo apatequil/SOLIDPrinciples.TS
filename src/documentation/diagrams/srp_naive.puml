@@ -1,4 +1,4 @@
-@startuml
+@startuml SRP:Naive
 
 actor "Product Manager" as pm
 

@@ -1,4 +1,4 @@
-@startuml
+@startuml SRP:Refactored
 
 package "Actors" {
 	actor "Product Manager" as pm
