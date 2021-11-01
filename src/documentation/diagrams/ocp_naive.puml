@@ -1,0 +1,46 @@
+@startuml "OCP:Naive"
+
+class ProductManager {
+	logger: Logger
+}
+
+class Logger {
+	logType: LoggerType
+	log: void
+	info: void
+	debug: void
+	warning: void
+	error: void
+}
+
+note "The logger implementation switches off logType \nto determine which type of logging to do. If a new \ntype of logger is needed there would be changes \nrequired to the Logger" as N1
+
+ProductManager ..> Logger
+ProductManager .. N1
+
+@enduml
+
+
+@startuml "OCP:Naive:Workflow"
+
+(*) --> "Add Product" as AP
+AP --> "Validate" as V
+if "Is Valid Product" then
+	--> [Yes] "Perform addition" as PA
+else
+	--> [No] "Log Errors" as LE
+	LE --> "Determine log type and log" as DE #CC0000
+
+endif
+
+
+note right
+The determination of log type is something that
+would need to be updated if new types are added
+end note
+
+
+PA --> (*)
+DE --> (*)
+
+@enduml
