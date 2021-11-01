@@ -1,0 +1,70 @@
+@startuml "OCP:Refactored"
+
+interface ILogger {
+	log: void
+	info: void
+	debug: void
+	warning: void
+	error: void
+}
+
+abstract class BaseLogger {
+
+}
+
+package "Logger Implementations" as LI {
+
+	class ConsoleLogger {}
+	class DatabaseLogger {}
+	class FileLogger {}
+}
+
+BaseLogger ..|> ILogger
+ConsoleLogger --|> BaseLogger
+DatabaseLogger --|> BaseLogger
+FileLogger --|> BaseLogger
+
+class PrincipleLogger {
+	logger: ILogger
+}
+
+note "The PrincipleLogger encapsulates \nall logging details and the manager just uses it" as N1
+note "Realized thorugh concrete loggers" as N2
+
+PrincipleLogger --> LI
+PrincipleLogger --> N2
+
+
+class ProductManager {
+	logger: PrincipleLogger
+}
+
+ProductManager -- N1
+ProductManager --* PrincipleLogger
+
+@enduml
+
+
+@startuml "OCP:Refactored:Workflow"
+
+(*) --> "Add Product" as AP
+AP --> "Validate" as V
+if "Is Valid Product" then
+	--> [Yes] "Perform addition" as PA
+else
+	--> [No] "Log Errors" as LE
+
+endif
+
+note left
+Just execute logging, doesn't matter what kind
+end note
+
+
+PA --> (*)
+LE --> (*)
+
+
+
+
+@enduml
