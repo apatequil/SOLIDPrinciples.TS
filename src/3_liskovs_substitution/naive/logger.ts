@@ -51,17 +51,41 @@ export class ConsoleLogger extends BaseLogger {
 
 // File logger implementation, pretend it logs to file instead of console
 export class FileLogger extends BaseLogger {
+	constructor(protected readonly filePath: string) {
+		super()
+	}
 	debug(message: string): void {
-		console.debug(`FileLogger: ${message}`);
+		console.debug(`FileLogger[${this.filePath}]: ${message}`);
 	}
 	info(message: string): void {
-		console.info(`FileLogger: ${message}`);
+		console.info(`FileLogger[${this.filePath}]: ${message}`);
 	}
 	warning(message: string): void {
-		console.warn(`FileLogger: ${message}`);
+		console.warn(`FileLogger[${this.filePath}]: ${message}`);
 	}
 	error(message: string): void {
-		console.error(`FileLogger: ${message}`);
+		console.error(`FileLogger[${this.filePath}]: ${message}`);
+	}
+}
+
+// Naive DB logger implementation. Implementation breaks LSP because it is changing the behavior
+// of the super class and would therefore generate side effects. In this case the implementation works
+// but the logging output behavior is different creating the side effect.
+export class DatabaseLogger extends FileLogger {
+	constructor(protected readonly dbPath: string) {
+		super(dbPath)
+	}
+	debug(message: string): void {
+		console.debug(`DbLogger[${this.dbPath}]: ${message}`);
+	}
+	info(message: string): void {
+		console.info(`DbLogger[${this.dbPath}]: ${message}`);
+	}
+	warning(message: string): void {
+		console.warn(`DbLogger[${this.dbPath}]: ${message}`);
+	}
+	error(message: string): void {
+		console.error(`DbLogger[${this.dbPath}]: ${message}`);
 	}
 }
 

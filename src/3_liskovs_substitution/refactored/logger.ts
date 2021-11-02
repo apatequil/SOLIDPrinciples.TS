@@ -51,17 +51,45 @@ export class ConsoleLogger extends BaseLogger {
 
 // File logger implementation, pretend it logs to file instead of console
 export class FileLogger extends BaseLogger {
+	constructor(protected readonly filePath: string) {
+		super()
+	}
 	debug(message: string): void {
-		console.debug(`FileLogger: ${message}`);
+		console.debug(`FileLogger[${this.filePath}]: ${message}`);
 	}
 	info(message: string): void {
-		console.info(`FileLogger: ${message}`);
+		console.info(`FileLogger[${this.filePath}]: ${message}`);
 	}
 	warning(message: string): void {
-		console.warn(`FileLogger: ${message}`);
+		console.warn(`FileLogger[${this.filePath}]: ${message}`);
 	}
 	error(message: string): void {
-		console.error(`FileLogger: ${message}`);
+		console.error(`FileLogger[${this.filePath}]: ${message}`);
+	}
+}
+
+// Refactored DB logger implementation. This is a minor change but prevents
+// accidental side effects. While the code is nearly identical between this
+// class and the FileLogger, it isn't a good idea to create that coupling. By
+// doing so you introduce risk of misuse or confusion over the loggers and
+// someone down the road could accidentally break existing functionality more
+// easily than if there was a proper inheritence structure.
+export class DatabaseLogger extends BaseLogger {
+	constructor(protected readonly dbPath: string)
+	{
+		super()
+	}
+	debug(message: string): void {
+		console.debug(`DbLogger[${this.dbPath}]: ${message}`);
+	}
+	info(message: string): void {
+		console.info(`DbLogger[${this.dbPath}]: ${message}`);
+	}
+	warning(message: string): void {
+		console.warn(`DbLogger[${this.dbPath}]: ${message}`);
+	}
+	error(message: string): void {
+		console.error(`DbLogger[${this.dbPath}]: ${message}`);
 	}
 }
 
