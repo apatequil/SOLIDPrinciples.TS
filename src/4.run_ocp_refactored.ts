@@ -1,5 +1,5 @@
 
-// Open/Close Principle example
+// Open/Close Principle example refactored
 import { ProductManager, ProductValidator, ProductInventory, Validations, PrincipleLogger
 	, ConsoleLogger
 	//, DatabaseLogger

@@ -1,5 +1,5 @@
 
-// Single Responsibility Principle Examples
+// Single Responsibility Principle example start
 import { ProductManager } from './1_single_responsibility/naive'
 import chalk from 'chalk'
 

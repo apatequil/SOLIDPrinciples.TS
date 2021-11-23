@@ -1,5 +1,5 @@
 
-// Single Responsibility Principle Examples
+// Single Responsibility Principle example refactored
 import { ProductManager, ProductValidator, ProductInventory, Validations, ConsoleLogger } from './1_single_responsibility/refactored'
 
 function runSingleResponsibilityRefactored() {

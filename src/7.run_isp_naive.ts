@@ -1,39 +1,43 @@
 
-// Open/Close Principle example
-import { ProductManager, ProductValidator, ProductInventory, Validations, Logger, LoggerType } from './2_open_closed/naive'
+// Interface Segregation Principle example start
+import { ProductManager, ProductValidator, ProductInventory, Validations, PrincipleLogger, FileLogger } from './4_interface_segregation/naive'
 
-function runInterfaceSegregationNaive() {
+function runInterfaceSegregationRefactored(logPath: string) {
 
-	// //`===========================================`
-	// //`|| Interface Segregation Principle Naive ||`
-	// //`===========================================`
+	//`================================================`
+	//`|| Interface Segregation Principle Naive      ||`
+	//`================================================`
 
-	// // Construct logger. Note the type of logger is now passed and multiple types are supported
-	// // per the new requirements. For demonstration we're using a console logger
+	// A new requirement came down the to the developer to allow colorful output
+	// in the console logger so it's easier to see application health at a glance.
 
-	// // We could swap it for the db logger or file logger if we really wanted to fully expand the example
-	// const log: Logger = new Logger(LoggerType.Console)
-	// const validator: ProductValidator = new ProductValidator()
-	// validator.addValidation(Validations.isValidPrice)
-	// validator.addValidation(Validations.isValidQuantity)
-	// validator.addValidation(Validations.isDuplicateProduct)
+	// The first implementation adds the color to the ILogger interface. This was
+	// done so that any loggers we want can have the color information. This also
+	// means the loggers without color capabilities are required to implement these
+	// properties
 
-	// const startingInventory = [
-	// 	new ProductInventory("Unicycle", {name: 'Unicycle', description: 'Typical unicycle', price: 75}, 25),
-	// 	new ProductInventory("Bicycle", {name: 'Bicycle', description: 'Typical bicycle', price: 345}, 125),
-	// 	new ProductInventory("Tricycle", {name: 'Triycle', description: 'Typical tricycle', price: 121}, 30),
-	// 	new ProductInventory("Quadcycle", {name: 'Quadcycle', description: 'Typical quadcycle', price: 200}, 15),
-	// ]
+	const log: PrincipleLogger = new PrincipleLogger(new FileLogger(logPath))
+	const validator: ProductValidator = new ProductValidator()
+	validator.addValidation(Validations.isValidPrice)
+	validator.addValidation(Validations.isValidQuantity)
+	validator.addValidation(Validations.isDuplicateProduct)
 
-	// const manager = new ProductManager(validator, log, startingInventory)
+	const startingInventory = [
+		new ProductInventory("Unicycle", {name: 'Unicycle', description: 'Typical unicycle', price: 75}, 25),
+		new ProductInventory("Bicycle", {name: 'Bicycle', description: 'Typical bicycle', price: 345}, 125),
+		new ProductInventory("Tricycle", {name: 'Triycle', description: 'Typical tricycle', price: 121}, 30),
+		new ProductInventory("Quadcycle", {name: 'Quadcycle', description: 'Typical quadcycle', price: 200}, 15),
+	]
 
-	// console.log(`Beginning Inventory:`)
-	// manager.getProducts().forEach(x => console.log(`${x.name} (${x.inventoryCount}) - $${x.product.price}`))
+	const manager = new ProductManager(validator, log, startingInventory)
 
-	// // 'Now add a duplicated item and should see an error'
-	// manager.addProduct({name: 'Bicycle', description: 'Typical bicycle', price: 250}, 10)
+	console.log(`Beginning Inventory:`)
+	manager.getProducts().forEach(x => console.log(`${x.name} (${x.inventoryCount}) - $${x.product.price}`))
 
-	// console.log("Completed SRP:Refactored")
+	// 'Now add a duplicated item and should see an error'
+	manager.addProduct({name: 'Bicycle', description: 'Typical bicycle', price: 250}, 10)
+
+	console.log("Completed ISP:Naive")
 }
 
-runInterfaceSegregationNaive();
+runInterfaceSegregationRefactored('/mnt/logs/lsp.refactored.log');

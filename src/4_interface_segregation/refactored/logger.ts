@@ -1,12 +1,27 @@
+import chalk from 'chalk'
+
 export enum LogLevel { Debug, Info, Warning, Error }
 
-
+// The refactor to better conform to the ISP breaks down
+// interfaces and implementations into smaller, more cohesive
+// units. In this case the color information has bee extracted
+// and places in its own interface. This allows us to only
+// implement the colorful functionality if the logger implementation
+// needs it. The file and database loggers are now leaner as is
+// the base logger. We've met ISP conditions for our requirements
 export interface ILogger {
 	log(message: string, level: LogLevel): void
 	debug(message: string): void
 	info(message: string): void
 	warning(message: string): void
 	error(message: string): void
+}
+
+export interface IColorfulOutput extends ILogger {
+	debugColor: chalk.Chalk
+	errorColor: chalk.Chalk
+	infoColor: chalk.Chalk
+	warningColor: chalk.Chalk
 }
 
 export abstract class BaseLogger implements ILogger {
@@ -34,46 +49,54 @@ export abstract class BaseLogger implements ILogger {
 	abstract error(message: string): void
 }
 
-export class ConsoleLogger extends BaseLogger {
-	debug(message: string): void {
-		console.debug(message);
+// Request for color was primarily for the console logger which makes sense
+// given the color capabilities.
+export class ConsoleLogger extends BaseLogger implements IColorfulOutput {
+	debugColor: chalk.Chalk = chalk.blue;
+	errorColor: chalk.Chalk = chalk.red;
+	infoColor: chalk.Chalk = chalk.cyan;
+	warningColor: chalk.Chalk = chalk.yellow;
+
+	override debug(message: string): void {
+		console.log(this.debugColor`${message}`)
 	}
-	info(message: string): void {
-		console.info(message);
+	override info(message: string): void {
+		console.info(this.infoColor`${message}`);
 	}
-	warning(message: string): void {
-		console.warn(message);
+	override warning(message: string): void {
+		console.warn(this.warningColor`${message}`);
 	}
-	error(message: string): void {
-		console.error(message);
+	override error(message: string): void {
+		console.error(this.errorColor`${message}`);
 	}
 }
 
-// File logger implementation, pretend it logs to file instead of console
+// FileLogger no longer needs to implement things it doesn't care about.
 export class FileLogger extends BaseLogger {
+
 	constructor(protected readonly filePath: string) {
 		super()
 	}
-	debug(message: string): void {
+	override debug(message: string): void {
 		console.debug(`FileLogger[${this.filePath}]: ${message}`);
 	}
-	info(message: string): void {
+	override info(message: string): void {
 		console.info(`FileLogger[${this.filePath}]: ${message}`);
 	}
-	warning(message: string): void {
+	override warning(message: string): void {
 		console.warn(`FileLogger[${this.filePath}]: ${message}`);
 	}
-	error(message: string): void {
+	override error(message: string): void {
 		console.error(`FileLogger[${this.filePath}]: ${message}`);
 	}
 }
 
-// Naive DB logger implementation. Implementation breaks LSP because it is changing the behavior
-// of the super class and would therefore generate side effects. In this case the implementation works
-// but the logging output behavior is different creating the side effect.
-export class DatabaseLogger extends FileLogger {
-	constructor(protected readonly dbPath: string) {
-		super(dbPath)
+// FileLogger no longer needs to implement things it doesn't care about.
+export class DatabaseLogger extends BaseLogger {
+
+	constructor(protected readonly dbPath: string)
+	{
+		super()
 	}
 	override debug(message: string): void {
 		console.debug(`DbLogger[${this.dbPath}]: ${message}`);

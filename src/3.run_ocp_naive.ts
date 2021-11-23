@@ -1,5 +1,5 @@
 
-// Open/Close Principle example
+// Open/Close Principle example start
 import { ProductManager, ProductValidator, ProductInventory, Validations, Logger, LoggerType } from './2_open_closed/naive'
 
 function runOpenClosedNaive() {
