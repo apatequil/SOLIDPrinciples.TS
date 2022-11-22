@@ -15,7 +15,7 @@
 		"isp:naive": "set NODE_OPTIONS=\"-r ts-node/register\" && ts-node ./src/7.run_isp_naive.ts",
 		"isp:refactored": "set NODE_OPTIONS=\"-r ts-node/register\" && ts-node ./src/8.run_isp_naive.ts",
 		"dip:naive": "set NODE_OPTIONS=\"-r ts-node/register\" && ts-node ./src/9.run_dip_naive.ts",
-		"dip:refactored": "set NODE_OPTIONS=\"-r ts-node/register\" && ts-node ./src/10.run_dip_naive.ts"
+		"dip:refactored": "set NODE_OPTIONS=\"-r ts-node/register\" && ts-node ./src/10.run_dip_refactored.ts"
 	},
 	"author": "",
 	"license": "ISC",
