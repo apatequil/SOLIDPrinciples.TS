@@ -49,9 +49,25 @@ export abstract class BaseLogger implements ILogger {
 	abstract error(message: string): void
 }
 
+// Not all consoles support color, so this just implements the base logger
+export class ConsoleLogger extends BaseLogger {
+	override debug(message: string): void {
+		console.log(`${message}`)
+	}
+	override info(message: string): void {
+		console.info(`${message}`);
+	}
+	override warning(message: string): void {
+		console.warn(`${message}`);
+	}
+	override error(message: string): void {
+		console.error(`${message}`);
+	}
+}
+
 // Request for color was primarily for the console logger which makes sense
 // given the color capabilities.
-export class ConsoleLogger extends BaseLogger implements IColorfulOutput {
+export class ColorConsoleLogger extends BaseLogger implements IColorfulOutput {
 	debugColor: chalk.Chalk = chalk.blue;
 	errorColor: chalk.Chalk = chalk.red;
 	infoColor: chalk.Chalk = chalk.cyan;

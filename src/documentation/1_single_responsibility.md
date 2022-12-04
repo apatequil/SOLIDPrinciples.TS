@@ -25,10 +25,23 @@ All products are added and updated through the manager with an encapsulated coll
 The naive implementation of the product manager demonstrates code which works fine but breaks the Single Responsibility Principle by attempting to cover too many things. Below is what the true responsibility of the manager should be, what responsibilities the naive implementation has, and why those responsibilities aren't conducive to maintainable code.
 
 
+<div style="background-color: #333; padding: 1.2em">
 
-* <span style="color:#FFFF00">Responsibility 1: Maintain collection of products. This means holding the product catalog information and adding to it when told.</span>
-* <span style="color:orange">Responsibility 2: Validation. Right now the manager not only maintains the collection of products but it is also responsible for validating the products before adding them to the catalog. If any validation rules are added, removed, or changed, the manager would need to be updated. The validation is tangential to maintaining the collection of products.</span>
-* <span style="color:red">Responsibility 3: Reporting. The manager currently reports any validation issues, which validation issues, as well as listing products. This is a break of SRP and an additional responsibility because a change to a business rule in how these are formatted would mean a change to the manager. This is tangential to maintaining a collection of products</span>
+<ul>
+
+<li style="background-color: #333; color:#DDDD00">
+Responsibility 1: Maintain collection of products. This means holding the product catalog information and adding to it when told.
+</li>
+
+<li style="background-color: #333; color:darkorange">
+Responsibility 2: Validation. Right now the manager not only maintains the collection of products but it is also responsible for validating the products before adding them to the catalog. If any validation rules are added, removed, or changed, the manager would need to be updated. The validation is tangential to maintaining the collection of products.
+</li>
+
+<li style="background-color: #333; color:#FF5555">
+Responsibility 3: Reporting. The manager currently reports any validation issues, which validation issues, as well as listing products. This is a break of SRP and an additional responsibility because any change to the reporting would require a change to the manager.
+</li>
+</ul>
+</div>
 
 As shown above, there are at least 3 distinct responsibilities. The reason why they are distinct is because of the way they would need to change based on external factors. This means the manager would need to be modified if the validations changed despite the fact the manager doesn't really care. The only reason the manager should need to change is if the underlying collection has domain requirement changes.
 

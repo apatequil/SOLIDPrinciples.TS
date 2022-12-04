@@ -1,0 +1,51 @@
+@startuml solid_refactor_process_simple
+
+title Simplified SOLID Refactor Loop
+
+state "Analyze" as analysis
+state "Extract" as extract
+state "Inject" as inject
+
+[*] -d-> analysis
+
+analysis -d-> extract
+extract -l-> inject
+inject -u-> analysis
+
+analysis -r-> [*]
+
+@enduml
+
+@startuml solid_refactor_process
+'!theme amiga
+skinparam linetype ortho
+skinparam nodesep 75
+skinparam ranksep 75
+
+title SOLID Refactor Loop
+
+state "Analyze" as analysis
+state "Extract" as extract : Dependent code
+state "Inject" as inject
+
+state "Is Good Enough? (all yes)" as goodEnough {
+
+	state "Does it have a single responsibility?" as isSRP : Does it only have 1 reason to change?
+	state "Is it DRY?" as isItDry : Are there repeating blocks of similar code?
+	state "Does it change more frequently than its dependencies?" as changeFrequency : Faster-changing dependencies means inversion of control should be used
+
+	isSRP -d-> isItDry
+	isItDry -d-> changeFrequency
+}
+
+[*] -r-> analysis
+
+analysis -r-> isSRP
+extract -l-> inject
+inject -u-> analysis
+
+changeFrequency -d-> [*]
+note on link : Yes
+changeFrequency -r-> extract
+note on link : No
+@enduml
